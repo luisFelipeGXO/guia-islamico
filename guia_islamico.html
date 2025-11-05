@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Islâmico Completo: Fé, Orações e Conhecimento</title>
+    <!-- Carregamento do Tailwind CSS para um design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuração de cores e fontes personalizadas para a estética islâmica */
+        :root {
+            --color-primary: #059669; /* Verde Esmeralda */
+            --color-secondary: #F59E0B; /* Ouro/Âmbar */
+            --color-background: #F8F8F8; /* Fundo Suave */
+            --color-card: #FFFFFF; /* Fundo dos cards */
+        }
+
+        /* Define a fonte Inter (padrão moderno) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            min-height: 100vh; /* Garante que o corpo ocupa toda a altura da viewport */
+            display: flex;
+            flex-direction: column; /* Necessário para empurrar o footer para baixo */
+        }
+
+        /* Padrão geométrico de fundo sutil (inspirado na arte islâmica) */
+        .islamic-bg {
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(245, 158, 11, 0.04) 0,
+                rgba(245, 158, 11, 0.04) 1px,
+                transparent 1px,
+                transparent 15px
+            );
+            flex-grow: 1; /* Permite que o conteúdo principal cresça */
+        }
+
+        /* Estilo para a barra de navegação ativa */
+        .nav-active {
+            color: var(--color-secondary);
+            border-bottom: 3px solid var(--color-secondary);
+            font-weight: 700;
+        }
+
+        /* Estilo para a Du'a (trecho em árabe) */
+        .dua-arabic {
+            font-family: 'Noto Sans Arabic', 'Times New Roman', serif;
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 1.5;
+            direction: rtl; /* Garante que o texto árabe seja lido da direita para a esquerda */
+        }
+
+        /* Estilo para esconder todas as seções por padrão */
+        .content-section {
+            display: none;
+        }
+
+        /* Estilo para a Transliteração */
+        .transliteration {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        }
+        
+        /* Ajuste de layout de navegação para mobile - Scroll Horizontal */
+        @media (max-width: 640px) {
+            .nav-menu {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+                justify-content: flex-start;
+            }
+        }
+        
+        /* Estilo para o ícone de acordeão (transformação) */
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-icon.rotated {
+            transform: rotate(45deg); /* Gira de + para X (opcionalmente 180deg para seta) */
+        }
+         .mobile-menu-container {
+            transition: transform 0.3s ease-out;
+            transform: translateX(100%);
+        }
+        .mobile-menu-container.open {
+            transform: translateX(0);
+        }
+    </style>
+
+    <script>
+        // Variáveis de estado
+        let isDesktopDropdownOpen = false; 
+        let isMobileDropdownOpen = false;
+
+        // ==================================================================
+        // 1. Lógica do Dropdown (Desktop)
+        // ==================================================================
+        function toggleDropdown(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('knowledge-dropdown-menu');
+            
+            if (isDesktopDropdownOpen) {
+                dropdown.classList.add('hidden');
+                dropdown.classList.remove('block');
+            } else {
+                dropdown.classList.remove('hidden');
+                dropdown.classList.add('block');
+            }
+            isDesktopDropdownOpen = !isDesktopDropdownOpen;
+        }
+
+        // Fechar dropdown ao clicar fora (apenas desktop)
+        document.addEventListener('click', (event) => {
+            const dropdown = document.getElementById('knowledge-dropdown-menu');
+            const dropdownButton = document.querySelector('#desktop-nav .group button');
+            
+            if (window.innerWidth >= 768 && isDesktopDropdownOpen && 
+                !dropdown.contains(event.target) && !dropdownButton.contains(event.target)) {
+                dropdown.classList.add('hidden');
+                dropdown.classList.remove('block');
+                isDesktopDropdownOpen = false;
+            }
+        });
+
+        // ==================================================================
+        // 2. Lógica do Menu Mobile (Hamburger Menu) - ATUALIZADA
+        // ==================================================================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu-overlay');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+
+            // Alterna a classe 'open' para controlar a animação slide-in/out
+            menu.classList.toggle('open');
+            const isOpen = menu.classList.contains('open'); // Checa o novo estado
+
+            if (isOpen) {
+                // Ação de ABRIR
+                backdrop.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Desabilita o scroll
+
+            } else {
+                // Ação de FECHAR
+                backdrop.classList.add('hidden');
+                document.body.style.overflow = ''; // Habilita o scroll
+                
+                // Garante que o sub-menu "Conhecimento" feche se estiver aberto
+                if (isMobileDropdownOpen) { 
+                    toggleDropdownMobile();
+                }
+            }
+        }
+        
+        // ==================================================================
+        // 3. Lógica do Dropdown Mobile (Acordeão)
+        // ==================================================================
+        function toggleDropdownMobile() {
+            const dropdown = document.getElementById('mobile-dropdown-menu');
+            const arrow = document.getElementById('mobile-arrow');
+
+            if (isMobileDropdownOpen) {
+                dropdown.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            } else {
+                dropdown.classList.remove('hidden');
+                dropdown.classList.add('block'); // Use 'block' para garantir que apareça
+                arrow.classList.add('rotate-180');
+            }
+            isMobileDropdownOpen = !isMobileDropdownOpen;
+        }
+        
+        // ==================================================================
+        // 4. Lógica de Navegação (Exibir Seções)
+        // ==================================================================
+        function showSection(sectionId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Mostra a seção desejada
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                document.getElementById('current-section').textContent = sectionId;
+            }
+
+            // Garante que o dropdown desktop feche após o clique
+            if (isDesktopDropdownOpen) {
+                toggleDropdown({preventDefault: () => {}}); 
+            }
+            
+            // Rola para o topo da página para garantir que o conteúdo da nova seção seja visível
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        }
+
+        // ==================================================================
+        // 5. Inicialização e Listener para Links Mobile (FECHAR e NAVEGAR)
+        // ==================================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('home');
+            
+            // Adiciona listener para todos os links com a classe 'mobile-nav-link'
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault(); 
+                    
+                    // 1. Obtém o ID da seção do atributo data-section
+                    const sectionId = link.getAttribute('data-section');
+                    
+                    // 2. Navega para a seção
+                    if (sectionId) {
+                        showSection(sectionId);
+                    }
+                    
+                    // 3. Fecha o menu mobile
+                    toggleMobileMenu();
+                });
+            });
+        });
+        // Variáveis globais para rastrear a seção ativa
+        let activeSection = 'home';
+        
+        // --- Dados da Aplicação em Português ---
+        
+        const prayerTimesData = [
+            { name: "Fajr (Alvorada)", time: "05:15", status: "" },
+            { name: "Sunrise (Nascer do Sol)", time: "06:30", status: "Ignorar" },
+            { name: "Dhuhr (Meio-dia)", time: "12:45", status: "" },
+            { name: "Asr (Tarde)", time: "16:00", status: "" },
+            { name: "Maghrib (Pôr do Sol)", time: "18:35", status: "" },
+            { name: "Isha (Noite)", time: "20:00", status: "" },
+        ];
+
+        const duas = [
+            { title: "Du'a Antes de Dormir", significance: "Buscando proteção e entregando o espírito a Allah antes do repouso.", arabic: "اللهم باسمك أموت و أحيا", transliteration: "Allāhumma bismika amūtu wa ahyā", translation: "Ó Allah, em Teu nome morro e vivo." },
+            { title: "Du'a ao Acordar", significance: "Agradecendo a Allah por nos reviver após o sono, que é como uma pequena morte.", arabic: "الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور", transliteration: "Al-ḥamdu lillāhilla-dhī aḥyānā baʿda mā amātanā wa ilayhin-nushūr", translation: "Todo louvor é para Allah, que nos deu vida depois de nos dar a morte, e a Ele será o retorno." },
+            { title: "Du'a Para Aumentar o Conhecimento", significance: "Uma súplica do Alcorão, pedindo a expansão do saber útil.", arabic: "رَبِّ زِدْنِي عِلْمًا", transliteration: "Rabbi zidnī ʿilmā", translation: "Meu Senhor, aumenta-me em conhecimento. (Alcorão 20:114)" },
+            { title: "Du'a Ao Entrar na Mesquita", significance: "Buscando refúgio e proteção contra o mal ao entrar na casa de Allah.", arabic: "أعوذ بالله العظيم و بوجهه الكريم و سلطانه القديم من الشيطان الرجيم", transliteration: "Aʿūdhu billāhil-ʿaẓīm, wa bi-wajhihil-karīm, wa sulṭānihil-qadīm, minash-shayṭānir-rajīm", translation: "Busco refúgio em Allah, O Altíssimo, e em Sua Face Generosa, e em Sua autoridade eterna, contra Satanás, o amaldiçoado." },
+        ];
+
+        const quranExcerpts = [
+            { title: "Sura Al-Ikhlas (A Sinceridade) - 112", arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ (1) اللَّهُ الصَّمَدُ (2) لَمْ يَلِدْ وَلَمْ يُولَدْ (3) وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ (4)", transliteration: "Qul huwa Allāhu aḥad. Allāhu aṣ-ṣamad. Lam yalid wa lam yūlad. Wa lam yakun lahu kufuwan aḥad.", portuguese: "Dize: Ele é Allah, o Único. Allah é O Absoluto. Ele não gerou, nem foi gerado. E ninguém é comparável a Ele." },
+            { title: "Sura Al-Fatiha (A Abertura) - 1", arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ (1) ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ (2) ٱلرَّحْمَٰنِ ٱلرَّحِيمِ (3) مَٰلِكِ يَوْمِ ٱلدِّينِ (4) إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (5) ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ (6) صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ (7)", transliteration: "Bismi Allāhi Ar-Raḥmāni Ar-Raḥīm. Al-ḥamdu Lillāhi Rabbi Al-ʿālamīn. Ar-Raḥmāni Ar-Raḥīm. Māliki yawmi Ad-Dīn. 'Iyyāka naʿbudu wa 'iyyāka nastaʿīn. Ihdinā Aṣ-Ṣirāṭa Al-Mustaqīm. Ṣirāṭa Al-ladhīna anʿamta ʿalayhim ghayri Al-maghḍūbi ʿalayhim wa lā Aḍ-Ḍāllīn.", portuguese: "Em nome de Allah, o Clemente, o Misericordioso. Louvor a Allah, Senhor do Universo. O Clemente, o Misericordioso. Soberano do Dia do Juízo. Só a Ti adoramos e só de Ti imploramos ajuda. Guia-nos à senda reta. A senda dos que agraciaste; não a dos que são objeto da Tua ira, nem a dos desviados." }
+        ];
+
+        // Estatísticas Ricas e Detalhadas
+        const statsData = {
+            global_pop: "2.0 Bilhões",
+            brasil_pop: "1.5 Milhões",
+            crescimento_taxa: "+3% ao ano",
+            maior_populacao: "Indonésia (230M)",
+            distribuicao_asia: "62% (Concentração Principal)",
+            distribuicao_africa: "20% (Crescimento Rápido)",
+            idioma_comum: "Árabe Clássico (Linguagem do Alcorão)",
+            pilares_centrais: "20,5% (maior população islâmica)"
+        };
+
+
+        // --- Lógica de Navegação e Estado ---
+
+        /**
+         * Altera a seção de conteúdo ativa.
+         * @param {string} sectionId - O ID da seção a ser exibida.
+         */
+        function showSection(sectionId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Mostra a seção desejada
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                activeSection = sectionId;
+            }
+
+            // Atualiza o estado da navegação (cor e borda)
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('nav-active');
+            });
+            document.querySelectorAll(`nav a[data-section='${sectionId}']`).forEach(link => {
+                link.classList.add('nav-active');
+            });
+            
+            // Fecha o dropdown se um item dentro dele for clicado
+            const dropdown = document.getElementById('knowledge-dropdown-menu');
+            if (dropdown && dropdown.classList.contains('block') && ['duas', 'alcorão', 'profeta', 'estatisticas', 'tempos'].includes(sectionId)) {
+                dropdown.classList.remove('block');
+                dropdown.classList.add('hidden');
+            }
+
+            // Recarrega o conteúdo dinâmico (Duas, Alcorão, etc.) se necessário
+            if (sectionId === 'duas') renderDuas();
+            if (sectionId === 'alcorão') renderQuranExcerpts();
+            if (sectionId === 'tempos') calculateNextPrayer();
+            if (sectionId === 'estatisticas') renderStats();
+        }
+
+        /**
+         * Alterna a visibilidade do menu dropdown.
+         */
+        function toggleDropdown() {
+            const dropdown = document.getElementById('knowledge-dropdown-menu');
+            dropdown.classList.toggle('hidden');
+            dropdown.classList.toggle('block');
+        }
+
+        /**
+         * Alterna a visibilidade do conteúdo do acordeão (Doutrina).
+         * @param {string} contentId - O ID do conteúdo a ser expandido/contraído.
+         */
+        function toggleAccordion(contentId) {
+            const content = document.getElementById(contentId);
+            const button = document.querySelector(`[onclick="toggleAccordion('${contentId}')"]`);
+            const icon = button.querySelector('.accordion-icon');
+
+            if (content.classList.contains('hidden')) {
+                // Abre o painel
+                content.classList.remove('hidden');
+                icon.classList.add('rotated');
+            } else {
+                // Fecha o painel
+                content.classList.add('hidden');
+                icon.classList.remove('rotated');
+            }
+        }
+
+        // --- Funções de Renderização Dinâmica (mantidas) ---
+
+        function renderDuas() {
+            const container = document.getElementById('duas-list');
+            if (!container) return;
+            container.innerHTML = duas.map(dua => `
+                <div class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-emerald-500 mb-6 transition duration-300 hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">${dua.title}</h3>
+                    <p class="text-sm text-amber-600 mb-4 italic">${dua.significance}</p>
+                    <p class="dua-arabic text-right text-gray-900 mb-4">${dua.arabic}</p>
+                    <p class="text-xl transliteration text-amber-600 mb-2 text-right">(${dua.transliteration})</p>
+                    <p class="text-lg text-emerald-700 font-medium italic border-t pt-3 border-gray-100">${dua.translation}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderQuranExcerpts() {
+            const container = document.getElementById('quran-list');
+            if (!container) return;
+            container.innerHTML = quranExcerpts.map(excerpt => `
+                <div class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-emerald-500 mb-6 transition duration-300 hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-emerald-700 mb-3">${excerpt.title}</h3>
+                    <p class="dua-arabic text-right text-gray-900 mb-4">${excerpt.arabic}</p>
+                    <p class="text-xl transliteration text-amber-600 mb-2 text-right">(${excerpt.transliteration})</p>
+                    <p class="text-lg text-gray-700 border-t pt-3 border-gray-100">${excerpt.portuguese}</p>
+                </div>
+            `).join('');
+        }
+        
+        /**
+         * Renderiza os dados de estatísticas simulados.
+         */
+        function renderStats() {
+            const container = document.getElementById('stats-data');
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="p-6 bg-emerald-100 rounded-xl shadow-inner border-l-4 border-emerald-500">
+                        <p class="text-sm font-medium text-gray-600">População Global (Est.)</p>
+                        <p class="text-4xl font-bold text-emerald-700 mt-1">${statsData.global_pop}</p>
+                    </div>
+                    <div class="p-6 bg-emerald-100 rounded-xl shadow-inner border-l-4 border-emerald-500">
+                        <p class="text-sm font-medium text-gray-600">Muçulmanos no Brasil (Est.)</p>
+                        <p class="text-4xl font-bold text-emerald-700 mt-1">${statsData.brasil_pop}</p>
+                    </div>
+                    <div class="p-6 bg-emerald-100 rounded-xl shadow-inner border-l-4 border-emerald-500">
+                        <p class="text-sm font-medium text-gray-600">Taxa de Crescimento Anual</p>
+                        <p class="text-4xl font-bold text-emerald-700 mt-1">${statsData.crescimento_taxa}</p>
+                    </div>
+                    <div class="p-6 bg-emerald-100 rounded-xl shadow-inner border-l-4 border-emerald-500">
+                        <p class="text-sm font-medium text-gray-600">Maior População Nacional</p>
+                        <p class="text-4xl font-bold text-emerald-700 mt-1">${statsData.maior_populacao}</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <div class="p-6 bg-white rounded-xl shadow-lg border-t-2 border-amber-500">
+                        <h3 class="font-semibold text-emerald-700">Distribuição Regional (Ásia)</h3>
+                        <p class="text-3xl font-bold text-amber-600">${statsData.distribuicao_asia}</p>
+                        <p class="text-sm text-gray-500">Local da maior concentração.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg border-t-2 border-amber-500">
+                        <h3 class="font-semibold text-emerald-700">Distribuição Regional (África)</h3>
+                        <p class="text-3xl font-bold text-amber-600">${statsData.distribuicao_africa}</p>
+                        <p class="text-sm text-gray-500">Região de forte e rápido crescimento.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-xl shadow-lg border-t-2 border-amber-500">
+                        <h3 class="font-semibold text-emerald-700">Porcentagem na Suécia</h3>
+                        <p class="text-3xl font-bold text-amber-600">${statsData.pilares_centrais}</p>
+                        <p class="text-sm text-gray-500">País europeu com mais muçulmanos.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateNextPrayer() {
+            // Lógica de cálculo de tempo mantida como antes
+            const now = new Date();
+            const currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
+            let nextPrayer = null;
+            let nextPrayerTime = Infinity;
+
+            for (const prayer of prayerTimesData) {
+                if (prayer.status === "Ignorar") continue; 
+
+                const [hours, minutes] = prayer.time.split(':').map(Number);
+                const prayerTimeMinutes = hours * 60 + minutes;
+
+                if (prayerTimeMinutes > currentTimeMinutes) {
+                    if (prayerTimeMinutes < nextPrayerTime) {
+                        nextPrayerTime = prayerTimeMinutes;
+                        nextPrayer = prayer;
+                    }
+                }
+            }
+
+            if (!nextPrayer) {
+                nextPrayer = prayerTimesData.find(p => p.name.includes("Fajr"));
+            }
+
+            // Renderiza os dados na tela inicial e na seção de Tempos de Oração
+            const nextPrayerEl = document.getElementById('next-prayer-info');
+            const prayerListEl = document.getElementById('prayer-list');
+
+            if (nextPrayerEl) {
+                nextPrayerEl.innerHTML = nextPrayer ? 
+                    `<p class="text-lg text-white">Próxima Oração:</p>
+                     <p class="text-4xl font-bold text-yellow-300 mt-1">${nextPrayer.name}</p>
+                     <p class="text-xl text-white mt-2">às ${nextPrayer.time} (Brasília)</p>` :
+                    `<p class="text-lg text-white">Horários de Oração Indisponíveis.</p>`;
+            }
+
+            if (prayerListEl) {
+                prayerListEl.innerHTML = prayerTimesData.map(prayer => {
+                    const isActive = nextPrayer && prayer.name === nextPrayer.name;
+                    return `
+                        <li class="flex justify-between items-center p-4 rounded-lg transition duration-200 ${isActive ? 'bg-yellow-100 border-l-4 border-yellow-500 font-bold text-emerald-800' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}">
+                            <span>${prayer.name}</span>
+                            <span class="text-xl">${prayer.time}</span>
+                        </li>
+                    `;
+                }).join('');
+            }
+        }
+        
+        /**
+         * Função de inicialização
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa e exibe a primeira seção
+            showSection('home');
+            
+            // Atualiza o relógio a cada segundo
+            setInterval(() => {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                document.getElementById('current-time').textContent = timeString;
+            }, 1000);
+
+            // Calcula a próxima oração na inicialização
+            calculateNextPrayer();
+        });
+
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Cabeçalho e Navegação Principal -->
+    <header class="bg-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Título/Logo -->
+                <div class="flex-shrink-0">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-emerald-700 tracking-wider">
+                        <span class="text-amber-500 text-3xl sm:text-4xl">G</span>uia <span class="text-amber-500">I</span>slâmico
+                    </span>
+                </div>
+                
+                <!-- 1. NAVEGAÇÃO PRINCIPAL (Desktop) -->
+                <nav id="desktop-nav" class="hidden md:flex space-x-2 lg:space-x-6 h-full">
+                    <a href="#" onclick="showSection('home')" data-section="home" class="py-5 px-3 text-sm lg:text-base text-gray-600 hover:text-emerald-700 transition duration-150 whitespace-nowrap flex items-center">Início</a>
+                    <a href="#" onclick="showSection('iniciantes')" data-section="iniciantes" class="py-5 px-3 text-sm lg:text-base text-gray-600 hover:text-emerald-700 transition duration-150 whitespace-nowrap flex items-center">Iniciantes</a>
+                    <a href="#" onclick="showSection('doutrina')" data-section="doutrina" class="py-5 px-3 text-sm lg:text-base text-gray-600 hover:text-emerald-700 transition duration-150 whitespace-nowrap flex items-center">Doutrina</a>
+                    <a href="#" onclick="showSection('oracoes')" data-section="oracoes" class="py-5 px-3 text-sm lg:text-base text-gray-600 hover:text-emerald-700 transition duration-150 whitespace-nowrap flex items-center">Orações</a>
+                    <a href="#" onclick="showSection('arabe')" data-section="arabe" class="py-5 px-3 text-sm lg:text-base text-gray-600 hover:text-emerald-700 transition duration-150 whitespace-nowrap flex items-center">Árabe Básico</a>
+                    
+                    <!-- Dropdown/Menu de Conhecimento (Desktop) -->
+                    <div class="relative group flex items-center">
+                        <button onclick="toggleDropdown(event)" class="py-5 px-3 text-sm lg:text-base text-gray-600 hover:text-emerald-700 transition duration-150 flex items-center whitespace-nowrap">
+                            Conhecimento
+                            <!-- Ícone de seta para baixo -->
+                            <svg class="w-4 h-4 ml-1 transition-transform transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        
+                        <!-- Conteúdo do Dropdown -->
+                        <div id="knowledge-dropdown-menu" class="hidden absolute top-full right-0 mt-0 w-48 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-20 overflow-hidden">
+                            <a href="#" onclick="showSection('duas')" data-section="duas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">Du'as (Súplicas)</a>
+                            <a href="#" onclick="showSection('alcorão')" data-section="alcorão" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">Alcorão (Trechos)</a>
+                            <a href="#" onclick="showSection('profeta')" data-section="profeta" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">Profeta Muhammad (ﷺ)</a>
+                            <a href="#" onclick="showSection('tempos')" data-section="tempos" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">Tempos de Oração</a>
+                            <a href="#" onclick="showSection('estatisticas')" data-section="estatisticas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">Estatísticas</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- 2. BOTÃO DO MENU MOBILE (Apenas em Mobile) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-gray-500 hover:text-emerald-700 p-2 rounded-md transition duration-150">
+                        <!-- Ícone Hamburger (Menu) -->
+                        <svg id="icon-menu" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3. MENU OVERLAY MOBILE (Apenas em Mobile) -->
+        <div id="mobile-menu-overlay" class="md:hidden fixed top-0 right-0 h-full w-64 bg-emerald-700 text-white shadow-2xl z-50 mobile-menu-container">
+            
+            <div class="p-4 flex justify-between items-center border-b border-emerald-600">
+                <span class="text-lg font-bold">Menu Principal</span>
+                <button onclick="toggleMobileMenu()" class="text-white hover:text-amber-500 p-1">
+                    <!-- Ícone Fechar (X) -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <nav id="mobile-nav-links" class="flex flex-col p-4 space-y-2">
+                <!-- ATUALIZADO: Removido showSection inline para evitar interrupção no fechamento -->
+                <a href="#" data-section="home" class="mobile-nav-link block py-2 px-3 text-lg rounded-md hover:bg-emerald-600 transition duration-150">Início</a>
+                <a href="#" data-section="iniciantes" class="mobile-nav-link block py-2 px-3 text-lg rounded-md hover:bg-emerald-600 transition duration-150">Iniciantes</a>
+                <a href="#" data-section="doutrina" class="mobile-nav-link block py-2 px-3 text-lg rounded-md hover:bg-emerald-600 transition duration-150">Doutrina</a>
+                <a href="#" data-section="oracoes" class="mobile-nav-link block py-2 px-3 text-lg rounded-md hover:bg-emerald-600 transition duration-150">Orações</a>
+                <a href="#" data-section="arabe" class="mobile-nav-link block py-2 px-3 text-lg rounded-md hover:bg-emerald-600 transition duration-150">Árabe Básico</a>
+                
+                <!-- Dropdown em Mobile (simples accordion) -->
+                <div class="relative group mt-4">
+                    <button onclick="toggleDropdownMobile()" class="w-full py-2 px-3 text-lg rounded-md flex justify-between items-center hover:bg-emerald-600 transition duration-150">
+                        Conhecimento
+                        <svg id="mobile-arrow" class="w-4 h-4 ml-1 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    
+                    <div id="mobile-dropdown-menu" class="hidden overflow-hidden bg-emerald-600 mt-1 rounded-md">
+                        <a href="#" data-section="duas" class="mobile-nav-link block px-6 py-2 text-base hover:bg-emerald-500">Du'as (Súplicas)</a>
+                        <a href="#" data-section="alcorão" class="mobile-nav-link block px-6 py-2 text-base hover:bg-emerald-500">Alcorão (Trechos)</a>
+                        <a href="#" data-section="profeta" class="mobile-nav-link block px-6 py-2 text-base hover:bg-emerald-500">Profeta Muhammad (ﷺ)</a>
+                        <a href="#" data-section="tempos" class="mobile-nav-link block px-6 py-2 text-base hover:bg-emerald-500">Tempos de Oração</a>
+                        <a href="#" data-section="estatisticas" class="mobile-nav-link block px-6 py-2 text-base hover:bg-emerald-500">Estatísticas</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Overlay de Fundo Escuro para Mobile (clicar para fechar) -->
+        <div id="mobile-menu-backdrop" onclick="toggleMobileMenu()" class="md:hidden hidden fixed inset-0 bg-black opacity-50 z-40"></div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="islamic-bg flex-grow max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <!-- --- SEÇÃO: INÍCIO (DASHBOARD) --- -->
+        <section id="home" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">As-salamu Alaykum (Paz esteja contigo)</h1>
+            <p class="text-xl text-gray-600">Seu guia rápido para a prática e os fundamentos da fé islâmica. Que Allah aceite os seus esforços.</p>
+
+            <!-- Cards principais, mantidos para dashboard -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Card 1: Próxima Oração -->
+                <div class="md:col-span-2 p-6 rounded-2xl bg-emerald-700 text-white shadow-lg flex flex-col justify-between">
+                    <div class="flex justify-between items-start">
+                        <!-- Icone da Mesquita (Inline SVG) -->
+                        <svg class="w-12 h-12 text-amber-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        <div class="text-right">
+                             <p class="text-base text-gray-200">Hora Atual (Local):</p>
+                             <p id="current-time" class="text-3xl font-extrabold text-amber-500">--:--</p>
+                        </div>
+                    </div>
+                    <div id="next-prayer-info" class="mt-4">
+                        <!-- Info da próxima oração será injetada aqui pelo JS -->
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-emerald-600">
+                        <a href="#" onclick="showSection('tempos')" class="text-sm text-yellow-300 hover:text-white font-medium transition">Ver todos os horários →</a>
+                    </div>
+                </div>
+
+                <!-- Card 2: 5 Pilares de Fé -->
+                <div class="p-6 bg-white rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold text-emerald-700 mb-3">Os 5 Pilares do Islão (Ações)</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center"><span class="text-amber-500 mr-2 font-extrabold">1.</span> Shahada (Testemunho de Fé)</li>
+                        <li class="flex items-center"><span class="text-amber-500 mr-2 font-extrabold">2.</span> Salat (Oração Ritual)</li>
+                        <li class="flex items-center"><span class="text-amber-500 mr-2 font-extrabold">3.</span> Zakat (Caridade Obrigatória)</li>
+                        <li class="flex items-center"><span class="text-amber-500 mr-2 font-extrabold">4.</span> Sawm (Jejum no Ramadan)</li>
+                        <li class="flex items-center"><span class="text-amber-500 mr-2 font-extrabold">5.</span> Hajj (Peregrinação a Meca)</li>
+                    </ul>
+                    <div class="mt-4">
+                         <a href="#" onclick="showSection('iniciantes')" class="text-sm text-emerald-600 hover:text-emerald-800 font-medium transition">Saiba mais sobre a Prática e a Doutrina →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: INICIANTES (FUNDAMENTOS DA FÉ, WUDU, PILARES E GLOSSÁRIO) --- -->
+        <section id="iniciantes" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Guia Para Iniciantes e Fundamentos</h1>
+
+            <!-- Bloco 5 Pilares do Islã (Ações) -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-3 flex items-center">
+                    I. Os Cinco Pilares do Islã (Ações Fundamentais)
+                </h2>
+                <!-- Conteúdo dos 5 pilares mantido -->
+                <div class="space-y-4 text-gray-700">
+                    <div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-amber-500">
+                        <p class="font-semibold text-emerald-700">1. Shahada (O Testemunho):</p>
+                        <p class="text-sm">A declaração de fé: "Ashhadu an lā ilāha illallāh, wa ashhadu anna Muḥammadan rasūlullāh". É a porta de entrada para o Islã.</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-amber-500">
+                        <p class="font-semibold text-emerald-700">2. Salat (As Orações):</p>
+                        <p class="text-sm">A oração ritual obrigatória realizada cinco vezes ao dia, estabelecendo a conexão direta e a disciplina do fiel.</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-amber-500">
+                        <p class="font-semibold text-emerald-700">3. Zakat (A Caridade Obrigatória):</p>
+                        <p class="text-sm">O dízimo obrigatório que purifica a riqueza restante e é distribuído aos necessitados anualmente.</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-amber-500">
+                        <p class="font-semibold text-emerald-700">4. Sawm (O Jejum):</p>
+                        <p class="text-sm">O jejum anual durante o Ramadã, como exercício de disciplina e empatia.</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-amber-500">
+                        <p class="font-semibold text-emerald-700">5. Hajj (A Peregrinação):</p>
+                        <p class="text-sm">A peregrinação obrigatória à Kaaba, em Meca, realizada uma vez na vida por quem tem condições.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloco Wudu (Ablução) - Mantido -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center">
+                    II. Wudu (Ablução Ritual)
+                </h2>
+                <p class="text-lg text-gray-700 mb-4">A purificação essencial antes da oração (Salat). A intenção (<span class="font-bold text-amber-600">Niyyah</span>) é o passo mais importante.</p>
+                <!-- Lista de Wudu mantida -->
+                <ol class="list-decimal ml-6 space-y-3 text-gray-700">
+                    <li><span class="font-semibold text-emerald-600">Niyyah & Bismillah:</span> Fazer a intenção e dizer "Bismillāh".</li>
+                    <li><span class="font-semibold text-emerald-600">Mãos:</span> Lavar as mãos até os pulsos (3 vezes).</li>
+                    <li><span class="font-semibold text-emerald-600">Boca/Nariz:</span> Enxaguar a boca e o nariz (3 vezes).</li>
+                    <li><span class="font-semibold text-emerald-600">Face:</span> Lavar o rosto (3 vezes).</li>
+                    <li><span class="font-semibold text-emerald-600">Braços:</span> Lavar os braços até os cotovelos, começando pelo direito (3 vezes).</li>
+                    <li><span class="font-semibold text-emerald-600">Cabelo/Orelhas:</span> Passar as mãos molhadas sobre o cabelo e limpar as orelhas (1 vez).</li>
+                    <li><span class="font-semibold text-emerald-600">Pés:</span> Lavar os pés até os tornozelos, começando pelo direito (3 vezes).</li>
+                </ol>
+            </div>
+            
+            <!-- NOVO BLOCO: GLOSSÁRIO DE TERMOS ESSENCIAIS -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-amber-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center">
+                    III. Glossário de Termos Essenciais
+                </h2>
+                <div class="grid md:grid-cols-2 gap-4 text-gray-700">
+                    <div class="p-3 bg-amber-50 rounded-lg">
+                        <p class="font-semibold text-amber-700">Sunnah:</p>
+                        <p class="text-sm">Os ditos, ações e aprovações do Profeta Muhammad (ﷺ). Serve como segunda fonte de lei islâmica.</p>
+                    </div>
+                    <div class="p-3 bg-amber-50 rounded-lg">
+                        <p class="font-semibold text-amber-700">Iman:</p>
+                        <p class="text-sm">Fé ou Crença. Refere-se aos seis pilares da fé (crença em Deus, anjos, livros, profetas, Dia do Juízo e Predestinação).</p>
+                    </div>
+                    <div class="p-3 bg-amber-50 rounded-lg">
+                        <p class="font-semibold text-amber-700">Halal / Haram:</p>
+                        <p class="text-sm">Lícito / Ilícito. Termos usados para classificar ações, alimentos e comportamentos como permitidos ou proibidos no Islã.</p>
+                    </div>
+                    <div class="p-3 bg-amber-50 rounded-lg">
+                        <p class="font-semibold text-amber-700">Insha'Allah:</p>
+                        <p class="text-sm">"Se Deus quiser." Expressão usada para indicar a intenção de realizar algo no futuro.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- --- SEÇÃO: DOUTRINA ISLÂMICA (ACORDEÃO) --- -->
+        <section id="doutrina" class="content-section space-y-4">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Doutrina Islâmica (Usul ad-Din)</h1>
+            <p class="text-xl text-gray-600">Explore os conceitos centrais da fé (Iman) através deste guia interativo. Clique nos títulos para expandir as explicações.</p>
+
+            <!-- ACORDEÃO 1: TAWID -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                <button onclick="toggleAccordion('content-tawhid')" class="w-full text-left p-5 flex justify-between items-center bg-emerald-50 hover:bg-emerald-100 transition duration-150">
+                    <h2 class="text-xl font-bold text-emerald-700 flex items-center">
+                        <span class="text-amber-500 mr-3 text-2xl"></span>Tawhid
+                    </h2>
+                    <span class="accordion-icon text-3xl text-emerald-600">+</span>
+                </button>
+                <div id="content-tawhid" class="hidden p-5 border-t border-gray-200 text-gray-700">
+                    <p class="text-lg font-medium text-gray-800 mb-3">O princípio fundamental do Islã: a absoluta Unicidade e Singularidade de Deus, dividido em três categorias:</p>
+                    <ul class="list-disc ml-6 space-y-2">
+                        <li>**Tawhid ar-Rububiyyah:** Crença de que Allah é o único Criador, Sustentador e Governante do universo.</li>
+                        <li>**Tawhid al-Uluhiyyah:** Crença de que somente Allah merece adoração; todos os atos de culto devem ser dirigidos exclusivamente a Ele.</li>
+                        <li>**Tawhid al-Asma was-Sifat:** Crença de que Allah possui Nomes e Atributos perfeitos e únicos, sem paralelos ou semelhanças com a criação.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ACORDEÃO 2: RISALAH -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                <button onclick="toggleAccordion('content-risalah')" class="w-full text-left p-5 flex justify-between items-center bg-emerald-50 hover:bg-emerald-100 transition duration-150">
+                    <h2 class="text-xl font-bold text-emerald-700 flex items-center">
+                        <span class="text-amber-500 mr-3 text-2xl"></span>Risalah
+                    </h2>
+                    <span class="accordion-icon text-3xl text-emerald-600">+</span>
+                </button>
+                <div id="content-risalah" class="hidden p-5 border-t border-gray-200 text-gray-700">
+                    <p class="text-lg font-medium text-gray-800 mb-3">A crença de que Allah comunica Sua orientação à humanidade através de Mensageiros (Nabi) e Profetas (Rasul).</p>
+                    <p class="mt-2">Os profetas, de Adão até Muhammad (que a paz esteja sobre todos eles), trouxeram a mesma mensagem de adoração exclusiva a Allah. O Profeta Muhammad (ﷺ) é o **Selo dos Profetas**, o último e final mensageiro, e seu exemplo (Sunnah) é a segunda fonte de guia.</p>
+                </div>
+            </div>
+
+            <!-- ACORDEÃO 3: AKHIRAH -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                <button onclick="toggleAccordion('content-akhirah')" class="w-full text-left p-5 flex justify-between items-center bg-emerald-50 hover:bg-emerald-100 transition duration-150">
+                    <h2 class="text-xl font-bold text-emerald-700 flex items-center">
+                        <span class="text-amber-500 mr-3 text-2xl"></span>Akhirah
+                    </h2>
+                    <span class="accordion-icon text-3xl text-emerald-600">+</span>
+                </button>
+                <div id="content-akhirah" class="hidden p-5 border-t border-gray-200 text-gray-700">
+                    <p class="text-lg font-medium text-gray-800 mb-3">A crença incondicional na ressurreição, no Dia do Juízo Final (Yawm al-Qiyamah), e na vida eterna que se segue.</p>
+                    <p class="mt-2">Esta crença abrange o período da vida na sepultura (Barzakh), o levantamento da humanidade para o julgamento, o peso das ações na Balança (Mizan), e a destinação final ao Paraíso (Jannah) ou ao Inferno (Jahannam).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: ORAÇÕES (SALAT GUIDE) - MANTIDA ESTRUTURA --- -->
+        <section id="oracoes" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Como Realizar a Salat (Oração Ritual)</h1>
+            <!-- Conteúdo da oração mantido -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4">Estrutura Detalhada de uma Rak'ah (Unidade de Oração)</h2>
+                
+                <div class="space-y-4 text-gray-700">
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">1. Qiyam (Em pé):</span> <span class="text-sm">Takbiratul Ihram, Recitar Al-Fatiha e outra Sura.</span>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">2. Ruku' (Inclinação):</span> <span class="text-sm">Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الْعَظِيمِ</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Subḥāna Rabbiyal Aẓīm) - "Glória ao meu Senhor, O Grandioso" (3x).</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">4. Sujud (Prostração):</span> <span class="text-sm">Tocar o chão com 7 pontos. Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Subḥāna Rabbiyal A'lā) - "Glória ao meu Senhor, O Altíssimo" (3x).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: TEMPOS DE ORAÇÃO (PRAYER TIMINGS) - MANTIDA --- -->
+        <section id="tempos" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Tempos de Oração (Salat)</h1>
+             <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-amber-500">
+                <p class="text-xl text-gray-700 mb-4">Horários para <span class="font-bold text-emerald-700">Brasília, DF, Brasil</span> (Dados simulados).</p>
+                <ul id="prayer-list" class="space-y-2">
+                    <!-- Conteúdo injetado pelo JS -->
+                </ul>
+                <div class="mt-6 p-4 bg-emerald-50 rounded-lg text-sm text-emerald-800 border border-emerald-200">
+                    <span class="font-bold">Nota:</span> Lembre-se que estes horários são simulados e podem não refletir a sua localização exata.
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: DUAS (SUPPLICAÇÕES) - MANTIDA --- -->
+        <section id="duas" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Duas (Súplicas) Importantes</h1>
+            <p class="text-xl text-gray-600">Súplicas (Duas) que podem ser recitadas em diferentes momentos do dia.</p>
+            <div id="duas-list">
+                <!-- Conteúdo injetado pelo JS -->
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: ALCORÃO (EXCERPTOS) - MANTIDA --- -->
+        <section id="alcorão" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Trechos Selecionados do Alcorão</h1>
+            <p class="text-xl text-gray-600">A palavra de Allah. Medite nestes trechos que são recitados frequentemente nas orações e no dia a dia.</p>
+            <div id="quran-list">
+                <!-- Conteúdo injetado pelo JS -->
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: ÁRABE BÁSICO - MANTIDA --- -->
+        <section id="arabe" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Árabe Básico para o Muçulmano</h1>
+            <p class="text-xl text-gray-600">A língua árabe é a chave para o Alcorão. Aprenda o básico de pronúncia e frases essenciais.</p>
+
+            <!-- Card: Pronúncia e Transliteração -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4">Guia de Pronúncia e Transliteração</h2>
+                <p class="text-lg text-gray-700 mb-4">Preste atenção nos sons que não existem no Português:</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 text-gray-600">
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <span class="text-amber-600 font-bold mr-2">ʿ ('ayn):</span> Um som gutural (garganta). Ex: *ʿAlī*.
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <span class="text-amber-600 font-bold mr-2">ḥ (ḥā):</span> Um 'H' forte, expelido do fundo da garganta. Ex: *Al-ḥamdu*.
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <span class="text-amber-600 font-bold mr-2">q (qāf):</span> Um 'K' mais profundo. Ex: *Qul*.
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <span class="text-amber-600 font-bold mr-2">dh (dhāl):</span> Similar ao 'th' de *'they'* em inglês. Ex: *Alladhī*.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card: Frases Essenciais -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-amber-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4">Manual de Frases Essenciais</h2>
+                
+                <div class="space-y-3">
+                    <div class="p-3 bg-emerald-50 rounded-lg">
+                        <p class="font-semibold">Paz e Saudação: <span class="dua-arabic inline-block ml-3">ٱلسَّلَامُ عَلَيْكُمْ</span></p>
+                        <p class="text-sm transliteration text-amber-600">(As-salāmu ʿalaykum) - A paz esteja convosco.</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg">
+                        <p class="font-semibold">Se Deus Quiser: <span class="dua-arabic inline-block ml-3">إِن شَاءَ ٱللَّٰهُ</span></p>
+                        <p class="text-sm transliteration text-amber-600">(In shā' Allāh) - Se Deus quiser (usado para o futuro).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: O PROFETA MUHAMMAD (P.A.S.C.E.) - MANTIDA --- -->
+        <section id="profeta" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">O Profeta Muhammad (ﷺ)</h1>
+            <p class="text-xl text-gray-600">O selo dos profetas e mensageiro final de Allah para a humanidade.</p>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4">Breve Biografia</h2>
+                <div class="space-y-4 text-gray-700">
+                    <p>Muhammad (ﷺ) nasceu em Meca, por volta de 570 EC, e recebeu a primeira revelação aos 40 anos, na caverna de Hira. Ele migrou para Medina (Hégira) em 622 EC, onde estabeleceu a primeira comunidade islâmica.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SEÇÃO: ESTATÍSTICAS E DADOS - RICA EM DETALHES --- -->
+        <section id="estatisticas" class="content-section space-y-8">
+            <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Estatísticas e Presença Global</h1>
+            <p class="text-xl text-gray-600">A segunda maior religião do mundo em rápido crescimento. Explore dados demográficos e geográficos chave.</p>
+            
+            <div id="stats-data" class="space-y-6">
+                <!-- Conteúdo de estatísticas injetado pelo JS -->
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Rodapé - Corrigido o posicionamento com flexbox e margem automática -->
+    <footer class="bg-emerald-900 text-white mt-auto p-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-sm">&copy; 2025 Guia Islâmico Online Completo. Criado com dedicação à Ummah. Bārak Allāhu Fīk (Que Allah te abençoe).</p>
+        </div>
+    </footer>
+
+</body>
+</html>
