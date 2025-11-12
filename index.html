@@ -224,12 +224,12 @@
         // --- Dados da Aplicação em Português ---
         
         const prayerTimesData = [
-            { name: "Fajr (Alvorada)", time: "05:15", status: "" },
-            { name: "Sunrise (Nascer do Sol)", time: "06:30", status: "Ignorar" },
-            { name: "Dhuhr (Meio-dia)", time: "12:45", status: "" },
-            { name: "Asr (Tarde)", time: "16:00", status: "" },
-            { name: "Maghrib (Pôr do Sol)", time: "18:35", status: "" },
-            { name: "Isha (Noite)", time: "20:00", status: "" },
+            { name: "Fajr (Alvorada)", time: "04:20", status: "" },
+            { name: "Sunrise (Nascer do Sol)", time: "05:36", status: "Ignorar" },
+            { name: "Dhuhr (Meio-dia)", time: "11:59", status: "" },
+            { name: "Asr (Tarde)", time: "15:08", status: "" },
+            { name: "Maghrib (Pôr do Sol)", time: "18:23", status: "" },
+            { name: "Isha (Noite)", time: "19:35", status: "" },
         ];
 
         const duas = [
@@ -740,28 +740,167 @@
                     <p class="mt-2">Esta crença abrange o período da vida na sepultura (Barzakh), o levantamento da humanidade para o julgamento, o peso das ações na Balança (Mizan), e a destinação final ao Paraíso (Jannah) ou ao Inferno (Jahannam).</p>
                 </div>
             </div>
+
+              <!-- ACORDEÃO 4: MANUAL SEXUAL -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                <button onclick="toggleAccordion('content-manualsexual')" class="w-full text-left p-5 flex justify-between items-center bg-emerald-50 hover:bg-emerald-100 transition duration-150">
+                    <h2 class="text-xl font-bold text-emerald-700 flex items-center">
+                        <span class="text-amber-500 mr-3 text-2xl"></span>Manual Sexual islâmico
+                    </h2>
+                    <span class="accordion-icon text-3xl text-emerald-600">+</span>
+                </button>
+                <div id="content-manualsexual" class="hidden p-5 border-t border-gray-200 text-gray-700">
+                    <p class="text-lg font-medium text-gray-800 mb-3">A crença incondicional na ressurreição, no Dia do Juízo Final (Yawm al-Qiyamah), e na vida eterna que se segue.</p>
+                    <p class="mt-2">Esta crença abrange o período da vida na sepultura (Barzakh), o levantamento da humanidade para o julgamento, o peso das ações na Balança (Mizan), e a destinação final ao Paraíso (Jannah) ou ao Inferno (Jahannam).</p>
+                </div>
+            </div>
         </section>
+
+      
 
         <!-- --- SEÇÃO: ORAÇÕES (SALAT GUIDE) - MANTIDA ESTRUTURA --- -->
         <section id="oracoes" class="content-section space-y-8">
             <h1 class="text-4xl font-extrabold text-emerald-800 border-b-2 border-amber-500 pb-2">Como Realizar a Salat (Oração Ritual)</h1>
             <!-- Conteúdo da oração mantido -->
             <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-emerald-500">
-                <h2 class="text-2xl font-bold text-emerald-700 mb-4">Estrutura Detalhada de uma Rak'ah (Unidade de Oração)</h2>
+                <h2 class="text-2xl font-bold text-emerald-700 mb-4">Raftar</h2>
                 
                 <div class="space-y-4 text-gray-700">
                     <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
-                        <span class="text-amber-600 font-bold block">1. Qiyam (Em pé):</span> <span class="text-sm">Takbiratul Ihram, Recitar Al-Fatiha e outra Sura.</span>
+                        <span class="text-amber-600 font-bold block">Início da oração</span> <span class="text-sm">Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">الله أكبر</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Al-lá-hu Ák-bar</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Deus é o Maior)</p>
                     </div>
                     <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
-                        <span class="text-amber-600 font-bold block">2. Ruku' (Inclinação):</span> <span class="text-sm">Dizer:</span>
+                        <span class="text-amber-600 font-bold block">Du‘ā de abertura</span> <span class="text-sm">Dizer:</span>
                         <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الْعَظِيمِ</p>
-                        <p class="text-base transliteration text-amber-600 text-right">(Subḥāna Rabbiyal Aẓīm) - "Glória ao meu Senhor, O Grandioso" (3x).</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na-ka Al-lá-hum-ma wa bi hám-di-ka — wa ta-bá-ra-ka ís-mu-ka — wa ta-‘á-lā jád-du-ka — wa lá i-lá-ha gháy-ruk</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado sejas, ó Allah, e louvado; bendito é Teu nome, exaltada é Tua majestade, e não há divindade além de Ti.)</p>
                     </div>
                     <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
-                        <span class="text-amber-600 font-bold block">4. Sujud (Prostração):</span> <span class="text-sm">Tocar o chão com 7 pontos. Dizer:</span>
+                        <span class="text-amber-600 font-bold block">Antes da recitação do Alcorão</span> <span class="text-sm">Antes da recitação do Alcorão</span>
                         <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
-                        <p class="text-base transliteration text-amber-600 text-right">(Subḥāna Rabbiyal A'lā) - "Glória ao meu Senhor, O Altíssimo" (3x).</p>
+                        <p class="text-base transliteration text-amber-600 text-right">A-‘ú-dhu bil-lá-hi mi-nash shay-tó-ni r-ra-jím</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Busco refúgio em Allah contra o Satanás, o maldito.)</p>
+
+                                                <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Bís-mi-l-lá-hi ar-Rah-má-ni ar-Ra-hím.</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Em nome de Allah, o Misericordioso, o Compassivo.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Surat Al-Fātiḥah</span> <span class="text-sm">Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Al-hám-du lil-lá-hi Ráb-bil ‘á-la-mín</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Louvado seja Allah, Senhor dos mundos.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Ar-Rah-má-ni ar-Ra-hím</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(O Misericordioso, o Compassivo.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Má-li-ki yáu-mi d-dín</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Soberano do Dia do Juízo.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Iy-yá-ka na‘-bu-du wa iy-yá-ka nas-ta-‘ín</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Só a Ti adoramos e só de Ti buscamos ajuda.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Ih-di-nas si-rá-tal mus-ta-qím</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Guia-nos pelo caminho reto.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Si-rá-tal-la-dhí-na an-‘ám-ta ‘a-láy-him — gháy-ril magh-dú-bi ‘a-láy-him — wa lad-dhál-lín</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(O caminho daqueles a quem concedeste Tua graça, não o dos que incorreram em Tua ira, nem dos desviados.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Surat Al-Ikhlāṣ</span> <span class="text-sm">Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Kul hu-wa Al-lá-hu Á-had</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Dize: Ele é Allah, o Único.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Al-lá-hu as-Sá-mad</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Allah, o Absoluto, o Eterno Refúgio.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Lam ya-líd wa lam yú-lad</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Não gerou e não foi gerado.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Wa lam ya-kun la-hu kú-fu-wan Á-had</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(E não há nada comparável a Ele.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Rukū</span> <span class="text-sm">Inclinação</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Al-lá-hu Ák-bar</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Deus é o Maior)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal ‘a-zím</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Grandioso.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal ‘a-zím</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Grandioso.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal ‘a-zím</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Grandioso.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Levantando-se</span> <span class="text-sm">Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sa-mi-‘al-lá-hu li-man há-mi-dah</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Allah ouve aquele que O louva.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Rab-ba-ná wa la-kal hám-d</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Ó nosso Senhor, a Ti pertence todo o louvor.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Sujūd</span> <span class="text-sm">Prostração</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Al-lá-hu Ák-bar</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Deus é o Maior)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal a‘-lá</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Altíssimo.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal a‘-lá</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Altíssimo.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal a‘-lá</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Altíssimo.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Sentado e segunda prostração</span> <span class="text-sm">Prostração</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Al-lá-hu Ák-bar</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Deus é o Maior)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal a‘-lá</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Altíssimo.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal a‘-lá</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Altíssimo.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Sub-há-na rab-bi-yal a‘-lá</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Glorificado seja meu Senhor, o Altíssimo.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">At-Taḥiyyāt</span> <span class="text-sm">Testemunho Final</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">At-ta-hi-yá-tu lil-lá-hi, was-sa-la-wá-tu wat-táyyi-bát</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Todas as saudações, orações e boas palavras pertencem a Allah.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">As-sa-lá-mu ‘a-láy-ka ay-yu-han-na-bí-yu wa rah-ma-tul-lá-hi wa ba-ra-ká-tuh</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Que a paz esteja sobre ti, ó Profeta, assim como a misericórdia de Allah e Suas bênçãos.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">As-sa-lá-mu ‘a-láy-ná wa ‘a-lá ‘i-bá-di-l-lá-hi as-sá-li-hín</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Que a paz esteja sobre nós e sobre todos os servos justos de Allah.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">Ash-ha-du an lá i-lá-ha il-lal-láh, wa ash-ha-du an-na Mu-hám-ma-dan ‘ab-du-hu wa ra-sú-luh</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Testifico que não há divindade além de Allah, e testifico que Muhammad é Seu servo e mensageiro.)</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-500">
+                        <span class="text-amber-600 font-bold block">Encerramento</span> <span class="text-sm">Dizer:</span>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">As-sa-lá-mu ‘a-láy-kum wa rah-ma-tul-láh</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Que a paz e a misericórdia de Allah estejam convosco.)</p>
+                        <p class="dua-arabic text-right text-gray-900 text-xl my-2">سُبْحَانَ رَبِّيَ الأَعْلَى</p>
+                        <p class="text-base transliteration text-amber-600 text-right">As-sa-lá-mu ‘a-láy-kum wa rah-ma-tul-láh</p>
+                        <p class="text-base transliteration text-amber-600 text-right">(Que a paz e a misericórdia de Allah estejam convosco.)</p>
                     </div>
                 </div>
             </div>
@@ -776,7 +915,7 @@
                     <!-- Conteúdo injetado pelo JS -->
                 </ul>
                 <div class="mt-6 p-4 bg-emerald-50 rounded-lg text-sm text-emerald-800 border border-emerald-200">
-                    <span class="font-bold">Nota:</span> Lembre-se que estes horários são simulados e podem não refletir a sua localização exata.
+                    <span class="font-bold">Nota:</span> Os horários estão de acordo com o fuso horário de Brasília.
                 </div>
             </div>
         </section>
